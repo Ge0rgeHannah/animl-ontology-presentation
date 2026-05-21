@@ -1,13 +1,20 @@
-import { Img, Layout, Rect, Txt, makeScene2D } from '@motion-canvas/2d';
+import { Img, Layout, Line, Rect, Txt, makeScene2D } from '@motion-canvas/2d';
 import { all, beginSlide, createRef, waitFor } from '@motion-canvas/core';
 
 import liverpoolLogo from '../../assets/uni-of-liverpool-logo-colour.svg';
 import unileverLogo from '../../assets/unilever-logo-colour.png';
+import animlData from '../../assets/AnIMLdata.png';
+import animlSchema from '../../assets/AnIMLschema.png';
+import unileverKG from '../../assets/UnileverKG.png';
+import ontology from '../../assets/ontology.png';
 
 const palette = {
 	background: '#FDF6E3',
 	text: '#5C6A72',
 	accent1: '#8DA101',
+	border: '#D8D3BA',
+	surface: '#F4F0D9',
+	blue: '#3A94C5',
 };
 
 const collapsedSize = 120;
@@ -21,6 +28,8 @@ export default makeScene2D(function*(view) {
 	const slideTitleText = createRef<Txt>();
 	const slideText1 = createRef<Txt>();
 	const slideText2 = createRef<Txt>();
+	const kGIMG = createRef<Layout>();
+	const ontoIMG = createRef<Layout>();
 
 	view.add(
 		<Rect width={1920} height={1080} fill={palette.background} fontFamily={'Raleway'}>
@@ -136,6 +145,53 @@ export default makeScene2D(function*(view) {
 					fill={palette.text}
 				/>
 			</Layout>
+			<Layout
+				ref={kGIMG}
+				opacity={0}
+				width={1500}
+				direction={'row'}
+				gap={64}
+				alignItems={'center'}
+				justifyContent={'center'}
+				layout
+			>
+				<Img src={animlData} height={300} />
+				<Line
+					points={[
+						[-70, 0],
+						[70, 0],
+					]}
+					stroke={palette.accent1}
+					lineWidth={8}
+					endArrow
+					arrowSize={20}
+				/>
+				<Img src={unileverKG} height={300} />
+			</Layout>
+			<Layout
+				ref={ontoIMG}
+				opacity={0}
+				width={1500}
+				direction={'row'}
+				gap={64}
+				y={-150}
+				alignItems={'center'}
+				justifyContent={'center'}
+				layout
+			>
+				<Img src={animlSchema} height={300} />
+				<Line
+					points={[
+						[-70, 0],
+						[70, 0],
+					]}
+					stroke={palette.accent1}
+					lineWidth={8}
+					endArrow
+					arrowSize={20}
+				/>
+				<Img src={ontology} height={300} />
+			</Layout>
 		</Rect>,
 	);
 
@@ -155,6 +211,16 @@ export default makeScene2D(function*(view) {
 	yield* slideText1().opacity(0, 0.4);
 	yield* slideText2().opacity(1, 0.4);
 
+	yield* beginSlide('task 1');
+	yield* slideText2().opacity(0, 0.4);
+	yield* kGIMG().opacity(1, 0.4);
+
+	yield* beginSlide('task 2');
+	yield* all(
+		kGIMG().y(150, 0.4),
+		ontoIMG().opacity(1, 0.4),
+	);
+
 	yield* beginSlide('backgroundClear');
 	yield* all(
 		slideTitle().width(collapsedSize, 0.4),
@@ -162,6 +228,7 @@ export default makeScene2D(function*(view) {
 		slideTitle().radius(collapsedRadius, 0.4),
 		slideTitle().x(titleTopLeftX + collapsedSize / 2, 0.4),
 		slideTitleText().opacity(0, 0.4),
-		slideText2().opacity(0, 0.4),
+		kGIMG().opacity(0, 0.4),
+		ontoIMG().opacity(0, 0.4),
 	);
 });
