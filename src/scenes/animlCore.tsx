@@ -3,12 +3,14 @@ import { all, beginSlide, createRef, waitFor } from '@motion-canvas/core';
 
 import liverpoolLogo from '../../assets/uni-of-liverpool-logo-colour.svg';
 import unileverLogo from '../../assets/unilever-logo-colour.png';
-import allotropLogo from '../../assets/AllotropeLogo.png';
+import animlCore from '../../assets/animl_core.png';
 
 const palette = {
 	background: '#FDF6E3',
+	accent1: '#DFA000',
 	text: '#5C6A72',
-	accent1: '#8DA101',
+	border: '#D8D3BA',
+	surface: '#F4F0D9',
 };
 
 const collapsedSize = 120;
@@ -20,9 +22,8 @@ export default makeScene2D(function*(view) {
 	const accentBar = createRef<Rect>();
 	const slideTitle = createRef<Rect>();
 	const slideTitleText = createRef<Txt>();
-	const question = createRef<Txt>();
-	const allotrope = createRef<Img>();
-	const slideText1 = createRef<Layout>();
+	const imageFrame = createRef<Rect>();
+	const bodyImage = createRef<Img>();
 
 	view.add(
 		<Rect width={1920} height={1080} fill={palette.background} fontFamily={'Raleway'}>
@@ -39,7 +40,7 @@ export default makeScene2D(function*(view) {
 				>
 					<Txt
 						ref={slideTitleText}
-						text={'Ontologies'}
+						text={'AnIML Ontology - Core'}
 						fontWeight={700}
 						fontSize={64}
 						fill={palette.background}
@@ -53,68 +54,25 @@ export default makeScene2D(function*(view) {
 				<Img src={liverpoolLogo} height={98} />
 			</Layout>
 
-			<Txt
-				ref={question}
-				text={'Why not reuse an exisiting ontology?'}
-				x={0}
+			<Rect
+				ref={imageFrame}
 				y={60}
-				width={1400}
-				fontSize={72}
-				lineHeight={62}
-				textAlign={'center'}
-				textWrap={true}
-				fill={palette.text}
+				width={1620}
+				height={640}
+				radius={12}
+				fill={palette.surface}
+				stroke={palette.border}
+				lineWidth={4}
+				clip
 				opacity={0}
-			/>
-
-			<Layout
-				ref={slideText1}
-				x={0}
-				y={60}
-				width={1500}
-				direction={'column'}
-				gap={42}
-				alignItems={'start'}
-				opacity={0}
-				layout
 			>
-				<Txt
-					text={'• Ontologies are crucial to this task as they faciliate reasoning across a knowledge base'}
-					fontSize={42}
-					lineHeight={58}
-					textWrap={true}
-					fill={palette.text}
+				<Img
+					ref={bodyImage}
+					src={animlCore}
+					y={0}
+					height={640}
 				/>
-				<Txt
-					text={'• There are existing ontologies that represent a similar domain'}
-					fontSize={42}
-					lineHeight={58}
-					textWrap={true}
-					fill={palette.text}
-				/>
-				<Txt
-					text={'• Differences in perspective mean mapping the data to these ontologies would lead to a loss of knowledge'}
-					fontSize={42}
-					lineHeight={58}
-					textWrap={true}
-					fill={palette.text}
-				/>
-				<Txt
-					text={'• Not all candidate ontologies are open source'}
-					fontSize={42}
-					lineHeight={58}
-					textWrap={true}
-					fill={palette.text}
-				/>
-			</Layout>
-
-			<Img
-				ref={allotrope}
-				opacity={0}
-				src={allotropLogo}
-				height={100}
-				y={380}
-			/>
+			</Rect>
 		</Rect>,
 	);
 
@@ -126,26 +84,28 @@ export default makeScene2D(function*(view) {
 		slideTitle().radius(28, 0.4),
 		slideTitle().x(titleTopLeftX + titleWidth / 2, 0.4),
 		slideTitleText().opacity(1, 0.4),
-		question().opacity(1, 0.4),
+		imageFrame().opacity(1, 0.4),
 	);
 
-	yield* beginSlide('ontologies');
+	yield* beginSlide('ontologyEngineering');
 	yield* all(
-		question().y(-300, 0.4),
-		question().fontSize(64, 0.4),
-		slideText1().opacity(1, 0.4),
-		allotrope().opacity(1, 0.4),
+		slideTitleText().opacity(0, 0.4),
+		slideTitle().width(collapsedSize, 0.4),
+		slideTitle().height(collapsedSize, 0.4),
+		slideTitle().radius(collapsedRadius, 0.4),
+		slideTitle().x(titleTopLeftX + collapsedSize / 2, 0.4),
+		imageFrame().x(20, 0.4),
+		imageFrame().y(-40, 0.4),
+		imageFrame().height(800, 0.4),
 	);
 
-	yield* beginSlide('ontologiesClear');
+	yield* beginSlide('ontologyEngineeringClear');
 	yield* all(
 		slideTitle().width(collapsedSize, 0.4),
 		slideTitle().height(collapsedSize, 0.4),
 		slideTitle().radius(collapsedRadius, 0.4),
 		slideTitle().x(titleTopLeftX + collapsedSize / 2, 0.4),
 		slideTitleText().opacity(0, 0.4),
-		question().opacity(0, 0.4),
-		slideText1().opacity(0, 0.4),
-		allotrope().opacity(0, 0.4),
+		imageFrame().opacity(0, 0.4),
 	);
 });

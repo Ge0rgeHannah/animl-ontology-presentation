@@ -3,12 +3,14 @@ import { all, beginSlide, createRef, waitFor } from '@motion-canvas/core';
 
 import liverpoolLogo from '../../assets/uni-of-liverpool-logo-colour.svg';
 import unileverLogo from '../../assets/unilever-logo-colour.png';
-import animlCore from '../../assets/animl_core.png';
+import animlTechnique from '../../assets/animl_technique.png';
 
 const palette = {
 	background: '#FDF6E3',
 	accent1: '#DFA000',
 	text: '#5C6A72',
+	border: '#D8D3BA',
+	surface: '#F4F0D9',
 };
 
 const collapsedSize = 120;
@@ -20,6 +22,7 @@ export default makeScene2D(function*(view) {
 	const accentBar = createRef<Rect>();
 	const slideTitle = createRef<Rect>();
 	const slideTitleText = createRef<Txt>();
+	const imageFrame = createRef<Rect>();
 	const bodyImage = createRef<Img>();
 
 	view.add(
@@ -37,7 +40,7 @@ export default makeScene2D(function*(view) {
 				>
 					<Txt
 						ref={slideTitleText}
-						text={'Ontology Engineering'}
+						text={'AnIML Ontology - Technique'}
 						fontWeight={700}
 						fontSize={64}
 						fill={palette.background}
@@ -51,13 +54,25 @@ export default makeScene2D(function*(view) {
 				<Img src={liverpoolLogo} height={98} />
 			</Layout>
 
-			<Img
-				ref={bodyImage}
-				src={animlCore}
+			<Rect
+				ref={imageFrame}
 				y={60}
+				width={1620}
 				height={640}
+				radius={12}
+				fill={palette.surface}
+				stroke={palette.border}
+				lineWidth={4}
+				clip
 				opacity={0}
-			/>
+			>
+				<Img
+					ref={bodyImage}
+					src={animlTechnique}
+					y={0}
+					height={640}
+				/>
+			</Rect>
 		</Rect>,
 	);
 
@@ -69,17 +84,28 @@ export default makeScene2D(function*(view) {
 		slideTitle().radius(28, 0.4),
 		slideTitle().x(titleTopLeftX + titleWidth / 2, 0.4),
 		slideTitleText().opacity(1, 0.4),
-		bodyImage().opacity(1, 0.4),
+		imageFrame().opacity(1, 0.4),
 	);
-	//yield* beginSlide('ontologyEngineering');
 
-	yield* beginSlide('ontologyEngineeringClear');
+	yield* beginSlide('animlTechnique');
+	yield* all(
+		slideTitleText().opacity(0, 0.4),
+		slideTitle().width(collapsedSize, 0.4),
+		slideTitle().height(collapsedSize, 0.4),
+		slideTitle().radius(collapsedRadius, 0.4),
+		slideTitle().x(titleTopLeftX + collapsedSize / 2, 0.4),
+		imageFrame().x(20, 0.4),
+		imageFrame().y(-40, 0.4),
+		imageFrame().height(800, 0.4),
+	);
+
+	yield* beginSlide('animlTechniqueClear');
 	yield* all(
 		slideTitle().width(collapsedSize, 0.4),
 		slideTitle().height(collapsedSize, 0.4),
 		slideTitle().radius(collapsedRadius, 0.4),
 		slideTitle().x(titleTopLeftX + collapsedSize / 2, 0.4),
 		slideTitleText().opacity(0, 0.4),
-		bodyImage().opacity(0, 0.4),
+		imageFrame().opacity(0, 0.4),
 	);
 });

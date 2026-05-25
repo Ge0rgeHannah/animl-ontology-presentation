@@ -1,5 +1,5 @@
 import { Img, Layout, Rect, Txt, makeScene2D } from '@motion-canvas/2d';
-import { beginSlide, waitFor } from '@motion-canvas/core';
+import { beginSlide, createRef, all } from '@motion-canvas/core';
 
 import liverpoolLogo from '../../assets/uni-of-liverpool-logo-colour.svg';
 import unileverLogo from '../../assets/unilever-logo-colour.png';
@@ -11,6 +11,9 @@ const palette = {
 };
 
 export default makeScene2D(function*(view) {
+	const title = createRef<Txt>();
+	const authors = createRef<Txt>();
+
 	view.add(
 		<Rect width={1920} height={1080} fill={palette.background} fontFamily={'Raleway'}>
 			<Layout x={-880} y={0}>
@@ -27,6 +30,7 @@ export default makeScene2D(function*(view) {
 			</Layout>
 
 			<Txt
+				ref={title}
 				text={'The AnIML Ontology: Enabling Semantic Interoperability for Large-Scale Experimental Data in Interconnected Scientific Labs'}
 				x={0}
 				y={-40}
@@ -38,6 +42,7 @@ export default makeScene2D(function*(view) {
 				fill={palette.text}
 			/>
 			<Txt
+				ref={authors}
 				text={'Wilf Morlidge, Elliot Watkins-Leek, George Hannah, Harry Rostron, Andrew Ng, Ewan Johnson, Andrew Mitchell, Terry R. Payne, Valentina Tamma, Jacopo de Berardinis'}
 				x={0}
 				y={160}
@@ -52,4 +57,8 @@ export default makeScene2D(function*(view) {
 	);
 
 	yield* beginSlide('title');
+	yield* all(
+		title().opacity(0, 0.4),
+		authors().opacity(0, 0.4),
+	);
 });

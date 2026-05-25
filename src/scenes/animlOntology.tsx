@@ -55,9 +55,9 @@ export default makeScene2D(function*(view) {
 
 			<Layout
 				ref={bodyText}
-				x={0}
+				x={-90}
 				y={90}
-				width={1480}
+				width={1300}
 				direction={'column'}
 				gap={52}
 				alignItems={'start'}
@@ -72,7 +72,21 @@ export default makeScene2D(function*(view) {
 					fill={palette.text}
 				/>
 				<Txt
+					text={'• Manually crafted by knowledge engineers in collaboration with domain experts at Unilever'}
+					fontSize={42}
+					lineHeight={58}
+					textWrap={true}
+					fill={palette.text}
+				/>
+				<Txt
 					text={'• 1:1 mapping for AnIML elements to classes'}
+					fontSize={42}
+					lineHeight={58}
+					textWrap={true}
+					fill={palette.text}
+				/>
+				<Txt
+					text={'• Built from two main modules, AnIML Core, and AnIML Technique in line with the original schema design'}
 					fontSize={42}
 					lineHeight={58}
 					textWrap={true}
