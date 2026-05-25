@@ -1,7 +1,6 @@
 # Generated files
 node_modules
 output
-dist
 
 # Editor directories and files
 .vscode/*
